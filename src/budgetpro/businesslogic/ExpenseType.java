@@ -9,6 +9,11 @@ public class ExpenseType {
         this.name = name;
     }
 
+    public ExpenseType(ExpenseType expenseType) {
+        this.id = expenseType.getId();
+        this.name = expenseType.getName();
+    }
+
     public int getId() {
         return id;
     }
