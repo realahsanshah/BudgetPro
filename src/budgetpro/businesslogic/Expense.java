@@ -34,6 +34,17 @@ public class Expense {
             e.printStackTrace();
         }
     }
+    public Expense(Expense expense) {
+        if(expense==null)
+            return;
+        //Date Formatter
+        formatter=new SimpleDateFormat("dd/MM/yyyy");
+        this.id=expense.getId();
+        this.amount = expense.getAmount();
+        this.details = expense.getDetails();
+        this.type=expense.getType();
+        this.expenseDate=expense.getExpenseDate();
+    }
 
     public int getId() {
         return id;
@@ -53,5 +64,9 @@ public class Expense {
 
     public Date getExpenseDate() {
         return expenseDate;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

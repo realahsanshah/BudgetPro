@@ -3,13 +3,15 @@ package budgetpro.businesslogic;
 import java.util.ArrayList;
 
 public class ExpenseTypeList {
-    ArrayList<ExpenseType> expenseTypes;
+    private ArrayList<ExpenseType> expenseTypes;
 
     public ExpenseTypeList() {
         this.expenseTypes =new ArrayList<>();
     }
 
     public void addExpenseType(ExpenseType expenseType){
+        if(expenseType==null)
+            return;
         expenseTypes.add(expenseType);
         expenseType.setId(expenseTypes.size());
     }
