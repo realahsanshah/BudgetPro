@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.*;
 import java.util.ArrayList;
 
 
@@ -39,16 +38,17 @@ public class MainGUI extends JFrame {
             dbConnect = new DBConnect("db/expensedb.db");
             dbConnect.connect();
         }
-        if(expenseList==null)
+        if (expenseList == null)
             expenseList = new ExpenseList();
 
-        if(expenseTypes==null)
-            expenseTypes =new ExpenseTypeList();
+        if (expenseTypes == null)
+            expenseTypes = new ExpenseTypeList();
 
-        //Read ExpenseList from file
-        readExpenseList();
-        //Read Expense Types from file
+
+        //Read Expense Types from db
         readExpenseTypes();
+        //Read ExpenseList from db
+        readExpenseList();
 
         //get current window pane
         container = this.getContentPane();
@@ -346,7 +346,7 @@ public class MainGUI extends JFrame {
         for (int i = 0; i < expenseData.length; i++) {
             totalExpense += Double.parseDouble(expenseData[i][3]);
         }
-        JLabel summaryLabel = new JLabel("Summary" + Double.toString(totalExpense));
+        JLabel summaryLabel = new JLabel("Summary" + totalExpense);
         JTextArea summary = new JTextArea();
 
         summary.setColumns(12);
@@ -367,26 +367,26 @@ public class MainGUI extends JFrame {
     //to save Expense types and Expense List using Serialization
 
     public void saveExpenseTypes() {
-        FileOutputStream fileOutputStream = null;
-        ObjectOutputStream outputStream = null;
-        try {
-            fileOutputStream = new FileOutputStream("expenseTypes.dat");
-            outputStream = new ObjectOutputStream(fileOutputStream);
-            outputStream.writeObject(expenseTypes);
-            System.out.println("Types Saved");
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                outputStream.close();
-                fileOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        FileOutputStream fileOutputStream = null;
+//        ObjectOutputStream outputStream = null;
+//        try {
+//            fileOutputStream = new FileOutputStream("expenseTypes.dat");
+//            outputStream = new ObjectOutputStream(fileOutputStream);
+//            outputStream.writeObject(expenseTypes);
+//            System.out.println("Types Saved");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                outputStream.close();
+//                fileOutputStream.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
-        for(ExpenseType exp:expenseTypes.getExpenseTypes()) {
-            dbConnect.addExpenseType(exp.getId(),exp.getName());
+        for (ExpenseType exp : expenseTypes.getExpenseTypes()) {
+            dbConnect.addExpenseType(exp.getId(), exp.getName());
         }
     }
 
@@ -434,32 +434,36 @@ public class MainGUI extends JFrame {
 //            }
 //
 //        }
+
         for(Expense exp:expenseList.getExpenses()) {
             dbConnect.addExpense(exp.getId(),exp.getAmount(),exp.getType(),exp.getDetails(),exp.getFormattedDate());
         }
     }
 
     public void readExpenseList() {
-        FileInputStream fileInputStream = null;
-        ObjectInputStream inputStream = null;
-        try {
-            fileInputStream = new FileInputStream("expenseList.dat");
-            inputStream = new ObjectInputStream(fileInputStream);
-            expenseList = (ExpenseList) inputStream.readObject();
+//        FileInputStream fileInputStream = null;
+//        ObjectInputStream inputStream = null;
+//        try {
+//            fileInputStream = new FileInputStream("expenseList.dat");
+//            inputStream = new ObjectInputStream(fileInputStream);
+//            expenseList = (ExpenseList) inputStream.readObject();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                inputStream.close();
+//                fileInputStream.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                inputStream.close();
-                fileInputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        expenseList.removeAll();
+        expenseList.readExpenseType(dbConnect, expenseTypes);
 
-        }
+    }
 
     }
 
 
-}
+

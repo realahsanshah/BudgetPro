@@ -1,5 +1,7 @@
 package budgetpro.businesslogic;
 
+import budgetpro.db.DBConnect;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -51,15 +53,23 @@ public class ExpenseList {
     public ArrayList<Expense> getMonthlyExpenses(){
         ArrayList<Expense> monthlyExpenseList=new ArrayList<>();
         Date date=new Date();
-        int month=date.getMonth();
-        for(Expense expense:expenses){
-            Date expenseDate=expense.getExpenseDate();
-            int expenseMonth=date.getMonth();
-            if(expenseMonth==month)
+        int month = date.getMonth();
+        for (Expense expense : expenses) {
+            Date expenseDate = expense.getExpenseDate();
+            int expenseMonth = date.getMonth();
+            if (expenseMonth == month)
                 monthlyExpenseList.add(expense);
         }
 
         return monthlyExpenseList;
+    }
+
+    public void removeAll() {
+        expenses.removeAll(expenses);
+    }
+
+    public void readExpenseType(DBConnect dbConnect, ExpenseTypeList expenseTypeList) {
+        dbConnect.readExpenses(expenses, expenseTypeList.getExpenseTypes());
     }
 
 }
