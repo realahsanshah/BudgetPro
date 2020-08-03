@@ -367,23 +367,6 @@ public class MainGUI extends JFrame {
     //to save Expense types and Expense List using Serialization
 
     public void saveExpenseTypes() {
-//        FileOutputStream fileOutputStream = null;
-//        ObjectOutputStream outputStream = null;
-//        try {
-//            fileOutputStream = new FileOutputStream("expenseTypes.dat");
-//            outputStream = new ObjectOutputStream(fileOutputStream);
-//            outputStream.writeObject(expenseTypes);
-//            System.out.println("Types Saved");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                outputStream.close();
-//                fileOutputStream.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
 
         for (ExpenseType exp : expenseTypes.getExpenseTypes()) {
             dbConnect.addExpenseType(exp.getId(), exp.getName());
