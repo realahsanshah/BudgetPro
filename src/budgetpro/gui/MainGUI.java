@@ -391,49 +391,11 @@ public class MainGUI extends JFrame {
     }
 
     public void readExpenseTypes() {
-//        FileInputStream fileInputStream = null;
-//        ObjectInputStream inputStream = null;
-//        try {
-//            fileInputStream = new FileInputStream("expenseTypes.dat");
-//            inputStream = new ObjectInputStream(fileInputStream);
-//            expenseTypes = (ArrayList<ExpenseType>) inputStream.readObject();
-//            for (ExpenseType expenseType : expenseTypes)
-//                System.out.println(expenseType);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                inputStream.close();
-//                fileInputStream.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
         expenseTypes.removeAll();
         expenseTypes.readExpenseType(dbConnect);
     }
 
     public void saveExpenseList() {
-//        FileOutputStream fileOutputStream = null;
-//        ObjectOutputStream outputStream = null;
-//        try {
-//            fileOutputStream = new FileOutputStream("expenseList.dat");
-//            outputStream = new ObjectOutputStream(fileOutputStream);
-//            outputStream.writeObject(expenseList);
-//            System.out.println("Expense List Saved");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                outputStream.close();
-//                fileOutputStream.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
 
         for(Expense exp:expenseList.getExpenses()) {
             dbConnect.addExpense(exp.getId(),exp.getAmount(),exp.getType(),exp.getDetails(),exp.getFormattedDate());

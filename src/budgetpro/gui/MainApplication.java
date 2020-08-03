@@ -6,7 +6,6 @@ import budgetpro.db.DBConnect;
 import java.util.Scanner;
 
 public class MainApplication {
-    private static Scanner scanner;
 
     public static void main(String[] args) {
 
