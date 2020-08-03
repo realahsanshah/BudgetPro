@@ -1,5 +1,7 @@
 package budgetpro.businesslogic;
 
+import budgetpro.db.DBConnect;
+
 import java.util.ArrayList;
 
 public class ExpenseTypeList {
@@ -22,6 +24,18 @@ public class ExpenseTypeList {
                 return expenseType.getName();
         }
         return null;
+    }
+
+    public int getSize(){
+        return expenseTypes.size();
+    }
+
+    public void removeAll(){
+        expenseTypes.removeAll(expenseTypes);
+    }
+
+    public void readExpenseType(DBConnect dbConnect){
+        dbConnect.readExpenseType(expenseTypes);
     }
 
     public ArrayList<ExpenseType> getExpenseTypes() {

@@ -69,4 +69,10 @@ public class Expense {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getFormattedDate(){
+        return formatter.format(expenseDate);
+    }
+
+
 }
