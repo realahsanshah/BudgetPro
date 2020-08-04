@@ -7,21 +7,26 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ExpenseList {
-    private final ArrayList<Expense> expenses;
+    private static ArrayList<Expense> expenses;
 
-    public ExpenseList() {
-        this.expenses =new ArrayList<>();
+    private ExpenseList() {
+        expenses = new ArrayList<>();
     }
 
-    public void addExpense(Expense expense){
-        if(expense==null)
+    public static void createExpenseList() {
+        if (expenses == null)
+            expenses = new ArrayList<>();
+    }
+
+    public void addExpense(Expense expense) {
+        if (expense == null)
             return;
         expenses.add(expense);
     }
 
     public ArrayList<Expense> getExpenses() {
-        ArrayList<Expense> temp=new ArrayList<>();
-        for(Expense expense:expenses){
+        ArrayList<Expense> temp = new ArrayList<>();
+        for (Expense expense : expenses) {
             temp.add(new Expense(expense));
         }
         return temp;

@@ -5,14 +5,19 @@ import budgetpro.db.DBConnect;
 import java.util.ArrayList;
 
 public class ExpenseTypeList {
-    private final ArrayList<ExpenseType> expenseTypes;
+    private static ArrayList<ExpenseType> expenseTypes;
 
-    public ExpenseTypeList() {
-        this.expenseTypes =new ArrayList<>();
+    private ExpenseTypeList() {
+        expenseTypes = new ArrayList<>();
     }
 
-    public void addExpenseType(ExpenseType expenseType){
-        if(expenseType==null)
+    public static void createExpenseTypes() {
+        if (expenseTypes == null)
+            expenseTypes = new ArrayList<>();
+    }
+
+    public void addExpenseType(ExpenseType expenseType) {
+        if (expenseType == null)
             return;
         expenseTypes.add(expenseType);
 

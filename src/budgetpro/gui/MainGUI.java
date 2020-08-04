@@ -8,8 +8,6 @@ import budgetpro.db.DBConnect;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -38,11 +36,10 @@ public class MainGUI extends JFrame {
             dbConnect = new DBConnect("db/expensedb.db");
             dbConnect.connect();
         }
-        if (expenseList == null)
-            expenseList = new ExpenseList();
 
-        if (expenseTypes == null)
-            expenseTypes = new ExpenseTypeList();
+        ExpenseList.createExpenseList();
+
+        ExpenseTypeList.createExpenseTypes();
 
 
         //Read Expense Types from db
