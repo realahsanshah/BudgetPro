@@ -22,11 +22,11 @@ public class MainGUI extends JFrame {
     public final int MONTHLY = 1;
 
 
-    private Container container;
-    private JPanel mainPanel; //mainWindow
+    private final Container container;
+    private final JPanel mainPanel; //mainWindow
     private JPanel homePanel; //Home Window
     private JPanel addPanel; //Window to add new expense in the list
-    private JPanel reportPanel; //Window to show all expense in table
+    private final JPanel reportPanel; //Window to show all expense in table
     private ExpenseList expenseList; //Object of ExpenseList class to store expenses
     private ExpenseTypeList expenseTypes; //expenseTypes list
     private String[][] expenseData; //2D Array to render on JTable
@@ -100,14 +100,11 @@ public class MainGUI extends JFrame {
         JMenuItem newItem = new JMenuItem("NEW");
 
         //Adding action listener to New
-        newItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // It will disappear all other windows panel, and only show addPanel to add Expenses
-                homePanel.setVisible(false);
-                reportPanel.setVisible(false);
-                addPanel.setVisible(true);
-            }
+        newItem.addActionListener(e -> {
+            // It will disappear all other windows panel, and only show addPanel to add Expenses
+            homePanel.setVisible(false);
+            reportPanel.setVisible(false);
+            addPanel.setVisible(true);
         });
 
         //adding NEW to File
@@ -116,25 +113,19 @@ public class MainGUI extends JFrame {
         //Adding Save Item to File
         JMenuItem saveItem = new JMenuItem("SAVE");
         fileMenu.add(saveItem);
-        saveItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveExpenseList();
-                saveExpenseTypes();
+        saveItem.addActionListener(e -> {
+            saveExpenseList();
+            saveExpenseTypes();
 
-                JOptionPane.showMessageDialog(null, "Data Saved", "Information", JOptionPane.INFORMATION_MESSAGE);
-            }
+            JOptionPane.showMessageDialog(null, "Data Saved", "Information", JOptionPane.INFORMATION_MESSAGE);
         });
 
         //It will save the data and exit the program
         JMenuItem exitItem = new JMenuItem("EXIT");
-        exitItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveExpenseTypes();
-                saveExpenseList();
-                System.exit(0);
-            }
+        exitItem.addActionListener(e -> {
+            saveExpenseTypes();
+            saveExpenseList();
+            System.exit(0);
         });
         fileMenu.add(exitItem);
 
@@ -144,46 +135,34 @@ public class MainGUI extends JFrame {
         JMenu expenseMenu = new JMenu("Report");
         JMenuItem weeklyItem = new JMenuItem("WEEKLY REPORT");
         expenseMenu.add(weeklyItem);
-        weeklyItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //It will create weekly data and show it
-                createReportData(WEEKLY);
-                createReportPanel();
+        weeklyItem.addActionListener(e -> {
+            //It will create weekly data and show it
+            createReportData(WEEKLY);
+            createReportPanel();
 
-                homePanel.setVisible(false);
-                addPanel.setVisible(false);
-                reportPanel.setVisible(true);
+            homePanel.setVisible(false);
+            addPanel.setVisible(false);
+            reportPanel.setVisible(true);
 
-            }
         });
 
 
         JMenuItem monthlyItem = new JMenuItem("MONTHLY REPORT");
         expenseMenu.add(monthlyItem);
-        monthlyItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //It will create monthly data and show it
-                createReportData(MONTHLY);
-                createReportPanel();
-                homePanel.setVisible(false);
-                addPanel.setVisible(false);
-                reportPanel.setVisible(true);
+        monthlyItem.addActionListener(e -> {
+            //It will create monthly data and show it
+            createReportData(MONTHLY);
+            createReportPanel();
+            homePanel.setVisible(false);
+            addPanel.setVisible(false);
+            reportPanel.setVisible(true);
 
-            }
         });
 
         menuBar.add(expenseMenu);
 
         JMenu aboutMenu = new JMenu("About");
-        aboutMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Budget Management System", "About", JOptionPane.INFORMATION_MESSAGE);
-
-            }
-        });
+        aboutMenu.addActionListener(e -> JOptionPane.showMessageDialog(null, "Budget Management System", "About", JOptionPane.INFORMATION_MESSAGE));
 
         menuBar.add(aboutMenu);
 
@@ -199,7 +178,7 @@ public class MainGUI extends JFrame {
         addPanel.setVisible(false);
 
         JLabel expenseTypeLabel = new JLabel("Expense Type");
-        JComboBox<ExpenseType> expenseType = new JComboBox<ExpenseType>();
+        JComboBox<ExpenseType> expenseType = new JComboBox<>();
 
 
         for (ExpenseType exp : expenseTypes.getExpenseTypes())
@@ -241,21 +220,18 @@ public class MainGUI extends JFrame {
         addExpensePanel.add(new JLabel(), 6);
         addExpensePanel.add(submitButton);
 
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        submitButton.addActionListener(e -> {
 
-                if (expenseDetailText.getText().compareTo("") == 0 || amountText.getText().compareTo("") == 0) {
-                    JOptionPane.showMessageDialog(null, "Please fill the values");
-                    return;
-                }
+            if (expenseDetailText.getText().compareTo("") == 0 || amountText.getText().compareTo("") == 0) {
+                JOptionPane.showMessageDialog(null, "Please fill the values");
+                return;
+            }
 
 //                Expense expense = new Expense(new ExpenseType((String)expenseType.getSelectedItem()), expenseDetailText.getText(), Double.parseDouble(amountText.getText()));
-                expenseList.addExpense(new Expense(0, (ExpenseType) expenseType.getSelectedItem(),expenseDetailText.getText(), Double.parseDouble(amountText.getText())));
-                expenseType.setSelectedIndex(0);
-                expenseDetailText.setText("");
-                amountText.setText("");
-            }
+            expenseList.addExpense(new Expense((ExpenseType) expenseType.getSelectedItem(),expenseDetailText.getText(), Double.parseDouble(amountText.getText())));
+            expenseType.setSelectedIndex(0);
+            expenseDetailText.setText("");
+            amountText.setText("");
         });
 
 
@@ -264,18 +240,15 @@ public class MainGUI extends JFrame {
         JTextField addExpenseTypeText = new JTextField(10);
         JButton addExpenseTypeSubmit = new JButton("OK");
 
-        addExpenseTypeSubmit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (addExpenseTypeText.getText() != "") {
+        addExpenseTypeSubmit.addActionListener(e -> {
+            if (addExpenseTypeText.getText() != "") {
 //                    expenseTypes.add(new ExpenseType(expenseTypes.size(),addExpenseTypeText.getText()));
-                    ExpenseType exp=new ExpenseType(expenseTypes.getSize(),addExpenseTypeText.getText());
-                    expenseTypes.addExpenseType(exp);
+                ExpenseType exp=new ExpenseType(addExpenseTypeText.getText());
+                expenseTypes.addExpenseType(exp);
 
-                    expenseType.addItem(exp);
-                    addExpenseTypeText.setText("");
-                    JOptionPane.showMessageDialog(null, "Expense Type added Successfully", "Success Message", JOptionPane.INFORMATION_MESSAGE);
-                }
+                expenseType.addItem(exp);
+                addExpenseTypeText.setText("");
+                JOptionPane.showMessageDialog(null, "Expense Type added Successfully", "Success Message", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
@@ -343,8 +316,8 @@ public class MainGUI extends JFrame {
         tablePanel.add(scrollPane);
 
         double totalExpense = 0;
-        for (int i = 0; i < expenseData.length; i++) {
-            totalExpense += Double.parseDouble(expenseData[i][3]);
+        for (String[] expenseDatum : expenseData) {
+            totalExpense += Double.parseDouble(expenseDatum[3]);
         }
         JLabel summaryLabel = new JLabel("Summary" + totalExpense);
         JTextArea summary = new JTextArea();

@@ -5,7 +5,7 @@ import budgetpro.db.DBConnect;
 import java.util.ArrayList;
 
 public class ExpenseTypeList {
-    private ArrayList<ExpenseType> expenseTypes;
+    private final ArrayList<ExpenseType> expenseTypes;
 
     public ExpenseTypeList() {
         this.expenseTypes =new ArrayList<>();
@@ -15,10 +15,10 @@ public class ExpenseTypeList {
         if(expenseType==null)
             return;
         expenseTypes.add(expenseType);
-        expenseType.setId(expenseTypes.size());
+
     }
 
-    public String getExpenseTypeName(int id) {
+    public String getExpenseTypeName(String id) {
         for (ExpenseType expenseType : expenseTypes) {
             if (expenseType.getId() == id)
                 return expenseType.getName();

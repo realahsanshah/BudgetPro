@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class DBConnect {
 
-    private String path;
+    private final String path;
     private Connection connection;
     public DBConnect(String path) {
         this.path = "jdbc:sqlite:"+path;
@@ -24,22 +24,14 @@ public class DBConnect {
         }
     }
 
-    public void disconnect() {
-        try {
-            connection.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void addExpenseType(int id, String name) {
+    public void addExpenseType(String id, String name) {
         if (isPresentExpenseType(id))
             return;
         String query = "INSERT INTO expenseType(id,name) VALUES(?,?);";
 
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
-            pstmt.setInt(1, id);
+            pstmt.setString(1, id);
             pstmt.setString(2, name);
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -47,7 +39,7 @@ public class DBConnect {
         }
     }
 
-    public void addExpense(int id,double amount,ExpenseType expenseType,String detail,String dated) {
+    public void addExpense(String id,double amount,ExpenseType expenseType,String detail,String dated) {
         if (isPresentExpense(id))
             return;
         String query = "INSERT INTO expense(amount,expenseType,detail,dated,id) VALUES(?,?,?,?,?);";
@@ -55,10 +47,10 @@ public class DBConnect {
         try {
             PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setDouble(1, amount);
-            pstmt.setInt(2, expenseType.getId());
+            pstmt.setString(2, expenseType.getId());
             pstmt.setString(3, detail);
             pstmt.setString(4, dated);
-            pstmt.setInt(5, id);
+            pstmt.setString(5, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,7 +69,7 @@ public class DBConnect {
             ResultSet resultSet=statement.executeQuery(query);
 
             while (resultSet.next()){
-                temp=new ExpenseType(resultSet.getInt("id"),resultSet.getString("name"));
+                temp=new ExpenseType(resultSet.getString("id"),resultSet.getString("name"));
                 expenseTypes.add(temp);
             }
 
@@ -94,8 +86,8 @@ public class DBConnect {
         Expense temp;
         ExpenseType expenseType = null;
         String query = "SELECT * FROM expense;";
-        int id;
-        int expenseTypeId;
+        String id;
+        String expenseTypeId;
         double amount;
         String details;
         String expenseDate;
@@ -109,13 +101,13 @@ public class DBConnect {
             boolean found;
             while (resultSet.next()) {
                 found = false;
-                id = resultSet.getInt("id");
-                expenseTypeId = resultSet.getInt("expenseType");
+                id = resultSet.getString("id");
+                expenseTypeId = resultSet.getString("expenseType");
                 amount = resultSet.getFloat("amount");
                 details = resultSet.getString("detail");
                 expenseDate = resultSet.getString("dated");
                 for (ExpenseType type : expenseTypes) {
-                    if (type.getId() == id) {
+                    if (type.getId().equals(id)) {
                         expenseType = new ExpenseType(type);
                         found = true;
                     }
@@ -133,9 +125,9 @@ public class DBConnect {
         }
     }
 
-    public boolean isPresentExpenseType(int id) {
+    public boolean isPresentExpenseType(String id) {
         boolean isPresent = false;
-        String query = "SELECT * FROM expenseType WHERE id=" + id + ";";
+        String query = "SELECT * FROM expenseType WHERE id=\"" + id + "\";";
         try {
 
             Statement statement = connection.createStatement();
@@ -155,9 +147,9 @@ public class DBConnect {
         return isPresent;
     }
 
-    public boolean isPresentExpense(int id) {
+    public boolean isPresentExpense(String id) {
         boolean isPresent = false;
-        String query = "SELECT * FROM expense WHERE id=" + id + ";";
+        String query = "SELECT * FROM expense WHERE id=\"" + id + "\";";
         try {
 
             Statement statement = connection.createStatement();

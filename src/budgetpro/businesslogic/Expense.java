@@ -3,25 +3,26 @@ package budgetpro.businesslogic;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 public class Expense {
-    private int id;
+    private String id;
     private double amount;
     private ExpenseType type;
     private String details;
     private Date expenseDate;
     private SimpleDateFormat formatter;     //to Format date
 
-    public Expense(int id,ExpenseType type,String details,double amount) {
+    public Expense(ExpenseType type,String details,double amount) {
         //Date Formatter
         formatter=new SimpleDateFormat("dd/MM/yyyy");
-        this.id=id;
+        this.id= UUID.randomUUID().toString();
         this.amount = amount;
         this.details = details;
         this.type=type;
         expenseDate=new Date();
     }
-    public Expense(int id,ExpenseType type,String details,double amount,String date) {
+    public Expense(String id,ExpenseType type,String details,double amount,String date) {
         //Date Formatter
         formatter=new SimpleDateFormat("dd/MM/yyyy");
         this.id=id;
@@ -46,7 +47,7 @@ public class Expense {
         this.expenseDate=expense.getExpenseDate();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -66,7 +67,7 @@ public class Expense {
         return expenseDate;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -1,10 +1,17 @@
 package budgetpro.businesslogic;
 
+import java.util.UUID;
+
 public class ExpenseType {
-    private int id;
+    private String id;
     private String name;
 
-    public ExpenseType(int id, String name) {
+    public ExpenseType(String name){
+        id= UUID.randomUUID().toString();
+        this.name=name;
+    }
+
+    public ExpenseType(String id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -14,7 +21,7 @@ public class ExpenseType {
         this.name = expenseType.getName();
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -22,7 +29,7 @@ public class ExpenseType {
         return name;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

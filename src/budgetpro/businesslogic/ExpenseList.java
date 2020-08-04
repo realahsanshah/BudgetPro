@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class ExpenseList {
-    private ArrayList<Expense> expenses;
+    private final ArrayList<Expense> expenses;
 
     public ExpenseList() {
         this.expenses =new ArrayList<>();
@@ -17,7 +17,6 @@ public class ExpenseList {
         if(expense==null)
             return;
         expenses.add(expense);
-        expense.setId(expenses.size());
     }
 
     public ArrayList<Expense> getExpenses() {
